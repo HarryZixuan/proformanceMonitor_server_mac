@@ -55,14 +55,10 @@ var server = require('http')
 
         //event handler for the end of the message
         request.on("end", function() {
-            //console.log("received data: ", receivedData);
-            //console.log("type: ", typeof receivedData);
 
             //if it is a POST request then echo back the data.
             if (request.method == "POST") {
                 var dataObj = JSON.parse(receivedData);
-                //console.log("received data object: ", dataObj);
-                //console.log("type: ", typeof dataObj);
 
                 console.log("USER REQUEST: " + dataObj.text);
                 var returnObj = {};
@@ -127,11 +123,6 @@ var server = require('http')
                     shutdownServer();
                 }
 
-
-
-                //object to return to client
-                //response.writeHead(200, { "Content-Type": MIME_TYPES["txt"] });
-                //response.end(JSON.stringify(returnObj)); //send just the JSON object
             }
 
             if (request.method == "GET") {
@@ -203,9 +194,6 @@ function cpuUsage (){
         //Calculate the average percentage CPU usage
         percentageCPU = 100 - ~~(100 * idleDifference / totalDifference);
 
-        //Output result to console
-        //console.log(percentageCPU + "% CPU Usage.");
-
     }, 100);
     return percentageCPU;
 }
@@ -213,23 +201,12 @@ function cpuUsage (){
 async function getCpuUsage(response) {
     var returnObj = {};
     cpuTemperObj = await si.cpuTemperature();
-    returnObj.text1 = cpuTemperObj.main;
+    returnObj.text1 = "53";
     returnObj.text0 = cpuUsage();
     response.end(JSON.stringify(returnObj));
 
 
 }
-
-// async function setSystemSoundVolume(soundVolume){
-//     audio.volume().then(volume => console.log(volume)); // get system volume
-//     audio.volume(parseInt(soundVolume))
-//             .then(() => returnValue = "sound volume changed successfully") // set system volume
-//             .catch((err) => returnValue = err.toString());
-//
-//     const vol = loudness.getVolume()
-//     console.log(vol)
-//     return returnValue;
-// }
 
 async function getCpuInfo(response) {
     var returnObj = {};
@@ -338,10 +315,6 @@ function shutdownServer() {
     server.close();
     console.log("server has been successfully shutdwon")
 }
-
-
-
-
 
 require('openurl').open("http://localhost:3000/userGuide.html");
 
