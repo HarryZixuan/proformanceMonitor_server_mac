@@ -1,3 +1,18 @@
+/*
+ZixuanZhang 101027027 SCS Carleton
+MacOS server file
+Reused the COMP 2406 server files
+Reference:
+systeminformation: https://systeminformation.io/
+cpuUsage: https://gist.github.com/bag-man/5570809
+openUrl: https://www.npmjs.com/package/openurl
+QR Code: https://www.npmjs.com/package/qrcode
+system-control(sound volume): https://www.npmjs.com/package/system-control
+brightness: https://www.npmjs.com/package/brightness
+*/
+
+
+
 const { audio } = require('system-control');
 const loudness  = require('loudness');
 const brightness = require('brightness');
@@ -57,6 +72,7 @@ var server = require('http')
         request.on("end", function() {
 
             //if it is a POST request then echo back the data.
+            //use POST to handle performance info requests
             if (request.method == "POST") {
                 var dataObj = JSON.parse(receivedData);
 
@@ -201,7 +217,7 @@ function cpuUsage (){
 async function getCpuUsage(response) {
     var returnObj = {};
     cpuTemperObj = await si.cpuTemperature();
-    returnObj.text1 = "53";
+    returnObj.text1 = cpuTemperObj.main;
     returnObj.text0 = cpuUsage();
     response.end(JSON.stringify(returnObj));
 
